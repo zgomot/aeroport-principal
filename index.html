@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aeroporturi principale</title>
+  <meta charset="utf-8" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #info {
+      background: white;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    #map {
+      height: 90vh;
+    }
+  </style>
+</head>
+<body>
+
+<div id="info">
+  <b>Aeroporturi principale din România</b><br>
+  Acest layer reprezintă sursele de zgomot (aeroporturi) utilizate în evaluarea strategică a zgomotului.
+</div>
+
+<div id="map"></div>
+
+<script>
+var map = L.map('map').setView([45.7, 25], 6);
+
+// fundal
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// WMS aeroport
+var aeroport = L.tileLayer.wms(
+  "https://geonoise.mmap.ro/ows/services/org.3.2b28fbdc-0714-4390-a47f-c54bbb02595b_wms",
+  {
+    layers: 'MajorAirportSource',
+    format: 'image/png',
+    transparent: true,
+    version: '1.1.1'
+  }
+);
+
+aeroport.addTo(map);
+</script>
+
+</body>
+</html>
